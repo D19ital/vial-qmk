@@ -457,6 +457,9 @@ void housekeeping_task_user(void) {
         if (transaction_rpc_send(RPC_PHENOM_SPLIT_POINTING_SETTINGS, sizeof(devices), &devices)) {
             phenom_synced_devices = devices;
             phenom_synced_devices_valid = true;
+        } else {
+            // The peer may have applied the settings before the RPC failed.
+            phenom_synced_devices_valid = false;
         }
     }
 
